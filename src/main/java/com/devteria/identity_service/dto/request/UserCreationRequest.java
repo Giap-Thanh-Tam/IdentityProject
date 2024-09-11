@@ -1,12 +1,13 @@
 package com.devteria.identity_service.dto.request;
 
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+
 public class UserCreationRequest {
-
-
     @Size(min = 3, message = "USERNAME_INVALID")
     private String username;
 
