@@ -1,6 +1,7 @@
 package com.devteria.identity_service.dto.request;
 
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
