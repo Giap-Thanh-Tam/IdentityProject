@@ -20,11 +20,11 @@ public class AuthenticationController {
 
     @PostMapping("/log-in")
     ApiResponse<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequest request){
-        boolean result = authenticationService.authenticate(request);
-        AuthenticationResponse authResponse = new AuthenticationResponse(result);
+        var result = authenticationService.authenticate(request);
+
 
         ApiResponse<AuthenticationResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(authResponse);
+        apiResponse.setResult(result);
 //        apiResponse.setMessage(result ? "Authentication successful" : "Authentication failed");
         return apiResponse;
 

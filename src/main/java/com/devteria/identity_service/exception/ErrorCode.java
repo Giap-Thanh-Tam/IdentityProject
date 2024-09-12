@@ -4,9 +4,10 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION("Uncategorized Error", 9999),
     INVALID_KEY("Invalid message key",1001),
     USER_EXISTED("User existed",1002),
-    USER_NOT_EXISTED("User not existed",1005),
     USERNAME_INVALID("Username must be ai least 3 characters",1003),
-    PASSWORD_INVALID("Password must be ai least 3 characters",1004);
+    PASSWORD_INVALID("Password must be ai least 3 characters",1004),
+    USER_NOT_EXISTED("User not existed",1005),
+    UNAUTHENTICATED("Unanthenticated",1006);
     ErrorCode(String message, int code) {
         this.message = message;
         this.code = code;
