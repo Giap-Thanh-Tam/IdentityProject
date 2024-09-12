@@ -1,6 +1,6 @@
 package com.devteria.identity_service.controller;
 
-import com.devteria.identity_service.dto.request.ApiResponse;
+import com.devteria.identity_service.dto.ApiResponse;
 import com.devteria.identity_service.dto.request.UserCreationRequest;
 import com.devteria.identity_service.dto.request.UserUpdateRequest;
 import com.devteria.identity_service.dto.response.UserResponse;

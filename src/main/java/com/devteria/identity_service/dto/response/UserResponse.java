@@ -1,22 +1,17 @@
 package com.devteria.identity_service.dto.response;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+
 
 import java.time.LocalDate;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
-     String id;
-     String username;
-     String password;
-     String firstName;
-     String lastName;
-     LocalDate dob;
+      private  String id;
+     private   String username;
+     private   String password;
+     private   String firstName;
+     private    String lastName;
+     private    LocalDate dob;
 
      public String getId() {
           return id;
