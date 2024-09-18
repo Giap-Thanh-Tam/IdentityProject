@@ -4,6 +4,7 @@ import com.devteria.identity_service.dto.request.AuthenticationRequest;
 import com.devteria.identity_service.dto.request.IntrospectRequest;
 import com.devteria.identity_service.dto.response.AuthenticationResponse;
 import com.devteria.identity_service.dto.response.IntrospectResponse;
+import com.devteria.identity_service.entity.User;
 import com.devteria.identity_service.exception.AppException;
 import com.devteria.identity_service.exception.ErrorCode;
 import com.devteria.identity_service.repository.UserRepository;
@@ -18,12 +19,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Service
 public class AuthenticationService {
@@ -46,14 +49,11 @@ public class AuthenticationService {
 
         IntrospectResponse introspectResponse = new IntrospectResponse(verified && expiryTime.after(new Date()));
         return introspectResponse;
-
 //        return IntrospectResponse.builder()
 //                .valid( verified && expiryTime.after(new Date())
 //                .build();
 //
-
     }
-
 
     public AuthenticationService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -69,25 +69,22 @@ public class AuthenticationService {
         if(!authenticated)
             throw new AppException(ErrorCode.UNAUTHENTICATED);
 
-        var token = generateToken(request.getUsername());
+        var token = generateToken(user);
         AuthenticationResponse authenticationResponse = new AuthenticationResponse(token,authenticated);
         return authenticationResponse;
-//        return AuthenticationResponse.builder()
-//                .token(token)
-//                .authenticated(true)
-//                .build();
+
     }
 
-    private String generateToken(String username){
+    private String generateToken(User user){
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(username)
+                .subject(user.getUsername())
                 .issuer("devteria.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
-                .claim("customClaim", "Custom")
+                .claim("scope", buildscope(user))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
@@ -99,4 +96,14 @@ public class AuthenticationService {
             throw new RuntimeException(e);
         }
     }
+
+    private String buildscope(User user){
+        StringJoiner stringJoiner = new StringJoiner(" ");
+        if (!CollectionUtils.isEmpty(user.getRoles())){
+            user.getRoles().forEach(s->stringJoiner.add(s));
+        }
+        return stringJoiner.toString();
+    }
+
+
 }

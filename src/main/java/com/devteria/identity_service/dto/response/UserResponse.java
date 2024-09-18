@@ -3,15 +3,36 @@ package com.devteria.identity_service.dto.response;
 
 
 import java.time.LocalDate;
+import java.util.Set;
 
 
 public class UserResponse {
-      private  String id;
-     private   String username;
-     private   String password;
-     private   String firstName;
-     private    String lastName;
-     private    LocalDate dob;
+     private String id;
+     private String username;
+     private String firstName;
+     private String lastName;
+     private LocalDate dob;
+     private Set<String> roles;
+
+     public UserResponse() {
+     }
+
+     public UserResponse(String id, String username, String firstName, String lastName, LocalDate dob, Set<String> roles) {
+          this.id = id;
+          this.username = username;
+          this.firstName = firstName;
+          this.lastName = lastName;
+          this.dob = dob;
+          this.roles = roles;
+     }
+
+     public Set<String> getRoles() {
+          return roles;
+     }
+
+     public void setRoles(Set<String> roles) {
+          this.roles = roles;
+     }
 
      public String getId() {
           return id;
@@ -27,14 +48,6 @@ public class UserResponse {
 
      public void setUsername(String username) {
           this.username = username;
-     }
-
-     public String getPassword() {
-          return password;
-     }
-
-     public void setPassword(String password) {
-          this.password = password;
      }
 
      public String getFirstName() {

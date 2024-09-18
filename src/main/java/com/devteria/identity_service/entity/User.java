@@ -4,8 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.mapstruct.Builder;
 
 import java.time.LocalDate;
+import java.util.Set;
+
 
 @Entity
 public class User {
@@ -18,7 +21,20 @@ public class User {
     private String firstName;
     private String lastName;
     private LocalDate dob;
+    private Set<String> roles;
 
+    public User() {
+    }
+
+    public User(String id, String username, String password, String firstName, String lastName, LocalDate dob, Set<String> roles) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.roles = roles;
+    }
 
     public String getId() {
         return id;
@@ -66,5 +82,13 @@ public class User {
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }
