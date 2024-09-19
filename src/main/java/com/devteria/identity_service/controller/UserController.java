@@ -41,8 +41,10 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    UserResponse getUserById(@PathVariable("userId") String userId){
-        return userService.getUserById(userId);
+    ApiResponse<UserResponse>getUserById(@PathVariable("userId") String userId){
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.getUserById(userId));
+        return apiResponse;
     }
 
 
@@ -54,17 +56,20 @@ public class UserController {
     }
 
 
-
-
     @PutMapping("/{userId}")
-    UserResponse UpdateUserById(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
-        return userService.UpdateUserById(userId,request);
+    ApiResponse<UserResponse> UpdateUserById(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.UpdateUserById(userId,request));
+        return apiResponse;
+
     }
 
     @DeleteMapping("/{userId}")
-    String DeleteUserById(@PathVariable("userId") String userId){
+    ApiResponse<String> DeleteUserById(@PathVariable("userId") String userId){
+        ApiResponse<String> apiResponse = new ApiResponse<>();
         userService.DeleteUserById(userId);
-        return "User has been deleted";
+        apiResponse.setResult("User has been deleted");
+        return apiResponse;
     };
 
 }
