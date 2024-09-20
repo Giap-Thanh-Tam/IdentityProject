@@ -64,7 +64,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/users/{userId}")
     ApiResponse<String> DeleteUserById(@PathVariable("userId") String userId){
         ApiResponse<String> apiResponse = new ApiResponse<>();
         userService.DeleteUserById(userId);

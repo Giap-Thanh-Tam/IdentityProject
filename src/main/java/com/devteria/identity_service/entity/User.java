@@ -1,9 +1,6 @@
 package com.devteria.identity_service.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.mapstruct.Builder;
 
 import java.time.LocalDate;
@@ -21,12 +18,14 @@ public class User {
     private String firstName;
     private String lastName;
     private LocalDate dob;
-    private Set<String> roles;
+
+    @ManyToMany
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String id, String username, String password, String firstName, String lastName, LocalDate dob, Set<String> roles) {
+    public User(String id, String username, String password, String firstName, String lastName, LocalDate dob, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -84,11 +83,11 @@ public class User {
         this.dob = dob;
     }
 
-    public Set<String> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }
