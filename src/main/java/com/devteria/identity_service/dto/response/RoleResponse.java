@@ -1,15 +1,19 @@
 package com.devteria.identity_service.dto.response;
 
+import java.util.Set;
+
 public class RoleResponse {
     private String name;
     private String description;
+    private Set<PermissionResponse> permissions;
 
     public RoleResponse() {
     }
 
-    public RoleResponse(String name, String description) {
+    public RoleResponse(String name, String description, Set<PermissionResponse> permissions) {
         this.name = name;
         this.description = description;
+        this.permissions = permissions;
     }
 
     public String getName() {
@@ -26,6 +30,14 @@ public class RoleResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<PermissionResponse> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<PermissionResponse> permissions) {
+        this.permissions = permissions;
     }
 }
 

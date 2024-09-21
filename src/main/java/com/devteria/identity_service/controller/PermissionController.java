@@ -33,10 +33,10 @@ public class PermissionController {
         return apiResponse;
     }
 
-    @DeleteMapping("/{permissionId}")
-    ApiResponse<String> delete(@PathVariable("permissionId") String permissionId){
+    @DeleteMapping("/{permissionName}")
+    ApiResponse<String> delete(@PathVariable("permissionName") String permissionName){
         ApiResponse<String> apiResponse = new ApiResponse<>();
-        permissionService.delete(permissionId);
+        permissionService.delete(permissionName);
         apiResponse.setResult("permission deleted");
         return  apiResponse;
     }
