@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 public class Role {
 
-
     @Id
     private String name;
     private String description;

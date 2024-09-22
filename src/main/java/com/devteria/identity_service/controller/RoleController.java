@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/roles")
 public class RoleController {
-    RoleService roleService;
+    private final RoleService roleService;
 
     public RoleController(RoleService roleService) {
         this.roleService = roleService;

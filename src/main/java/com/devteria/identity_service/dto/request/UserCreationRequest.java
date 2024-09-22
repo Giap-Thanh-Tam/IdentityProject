@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Size;
 
 
 import java.time.LocalDate;
+import java.util.Set;
 
 
 public class UserCreationRequest {
@@ -16,6 +17,7 @@ public class UserCreationRequest {
     private String lastName;
 
     private LocalDate dob;
+
 
     public String getUsername() {
         return username;
@@ -56,6 +58,8 @@ public class UserCreationRequest {
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
+
+
 }
 
 

@@ -8,6 +8,8 @@ import com.devteria.identity_service.enums.Role;
 import com.devteria.identity_service.exception.AppException;
 import com.devteria.identity_service.exception.ErrorCode;
 import com.devteria.identity_service.mapper.UserMapper;
+import com.devteria.identity_service.repository.PermissionRepository;
+import com.devteria.identity_service.repository.RoleRepository;
 import com.devteria.identity_service.repository.UserRepository;
 
 
@@ -26,10 +28,14 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
+    private final PermissionRepository permissionRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, PermissionRepository permissionRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.roleRepository = roleRepository;
+        this.permissionRepository = permissionRepository;
     }
 
     public UserResponse createUser(UserCreationRequest request){
@@ -52,6 +58,7 @@ public class UserService {
         String name = context.getAuthentication().getName();
         User user = userRepository.findByUsername(name).
                 orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
         return userMapper.toUserResponse(user);
     }
 
@@ -67,19 +74,26 @@ public class UserService {
     public UserResponse getUserById(String userId){
         System.out.println("in method get UsersByID");
         return userMapper.toUserResponse(userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found")));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 
     public UserResponse UpdateUserById(String userId, UserUpdateRequest request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
         userMapper.updateUser(user, request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
+
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
     public void DeleteUserById(String userId){
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         userRepository.deleteById(user.getId());
 
     }

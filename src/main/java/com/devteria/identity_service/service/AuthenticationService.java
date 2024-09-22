@@ -49,10 +49,7 @@ public class AuthenticationService {
 
         IntrospectResponse introspectResponse = new IntrospectResponse(verified && expiryTime.after(new Date()));
         return introspectResponse;
-//        return IntrospectResponse.builder()
-//                .valid( verified && expiryTime.after(new Date())
-//                .build();
-//
+
     }
 
     public AuthenticationService(UserRepository userRepository) {
@@ -99,9 +96,15 @@ public class AuthenticationService {
 
     private String buildscope(User user){
         StringJoiner stringJoiner = new StringJoiner(" ");
-//        if (!CollectionUtils.isEmpty(user.getRoles())){
-//            user.getRoles().forEach(s->stringJoiner.add(s));
-//        }
+
+        if (!CollectionUtils.isEmpty(user.getRoles())){
+            user.getRoles().forEach(role -> {
+                stringJoiner.add(role.getName());
+                if (!CollectionUtils.isEmpty(role.getPermissions()))
+                    role.getPermissions()
+                        .forEach(permission -> stringJoiner.add(permission.getName()));
+            });
+        }
         return stringJoiner.toString();
     }
 
