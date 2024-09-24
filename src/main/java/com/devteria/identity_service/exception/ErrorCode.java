@@ -11,7 +11,9 @@ public enum ErrorCode {
     PASSWORD_INVALID("Password must be at least 3 characters",1004,HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED("User not existed",1005, HttpStatus.NOT_FOUND),
     UNAUTHENTICATED("Unauthenticated",1006, HttpStatus.UNAUTHORIZED),
-    UNAUTHORIZED("You do not have permission",1007, HttpStatus.FORBIDDEN);
+    UNAUTHORIZED("You do not have permission",1007, HttpStatus.FORBIDDEN),
+    INVALID_DOB("Invalid date of birth",1008, HttpStatus.BAD_REQUEST);
+
 
     ErrorCode(String message, int code, HttpStatusCode statusCode) {
         this.message = message;
