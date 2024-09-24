@@ -79,7 +79,7 @@ public class AuthenticationService {
                 .issuer("devteria.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(4, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .claim("scope", buildscope(user))
                 .build();
@@ -99,7 +99,7 @@ public class AuthenticationService {
 
         if (!CollectionUtils.isEmpty(user.getRoles())){
             user.getRoles().forEach(role -> {
-                stringJoiner.add(role.getName());
+                stringJoiner.add("ROLE_" + role.getName());
                 if (!CollectionUtils.isEmpty(role.getPermissions()))
                     role.getPermissions()
                         .forEach(permission -> stringJoiner.add(permission.getName()));

@@ -63,7 +63,7 @@ public class UserService {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('APPROVE_POST')")
     public List<UserResponse> getUsers(){
         System.out.println("in method get Users");
         return userRepository.findAll().stream()
