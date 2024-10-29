@@ -13,6 +13,8 @@ import com.devteria.identity_service.repository.RoleRepository;
 import com.devteria.identity_service.repository.UserRepository;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
@@ -39,6 +42,8 @@ public class UserService {
     }
 
     public UserResponse createUser(UserCreationRequest request){
+        log.info("Service: creater User");
+
         if (userRepository.existsByUsername(request.getUsername()))
             throw new AppException(ErrorCode.USER_EXISTED);
         User user = userMapper.toUser(request);
